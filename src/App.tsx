@@ -1,19 +1,45 @@
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import { Header } from './components/Header';
 import { Home } from './pages/Home';
 import { Carrinho } from './pages/Carrinho';
 import { Pedidos } from './pages/Pedidos';
+import { Perfil } from './pages/Perfil';
+import { DashboardBiz } from './pages/DashboardBiz';
+import { PedidosBiz } from './pages/PedidosBiz';
+import { CrudPratos } from './components/biz/CrudPratos';
+import { useDeliveryStore } from './stores/deliveryStore';
+import { useMultiTabSync } from './hooks/useMultiTabSync';
 
 function App() {
+  const isDarkMode = useDeliveryStore(s => s.isDarkMode);
+
+  // Sincronização multi-tab
+  useMultiTabSync();
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDarkMode]);
+
   return (
     <Router>
-      <div className="min-h-screen flex flex-col transition-colors duration-300">
+      <Toaster position="bottom-right" reverseOrder={false} />
+      <div className="min-h-screen flex flex-col transition-colors duration-500 bg-slate-50 dark:bg-slate-950">
         <Header />
         <main className="flex-1">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/carrinho" element={<Carrinho />} />
             <Route path="/pedidos" element={<Pedidos />} />
+            <Route path="/perfil" element={<Perfil />} />
+            <Route path="/admin" element={<DashboardBiz />} />
+            <Route path="/admin/pedidos" element={<PedidosBiz />} />
+            <Route path="/admin/produtos" element={<CrudPratos />} />
           </Routes>
         </main>
 

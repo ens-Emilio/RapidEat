@@ -6,7 +6,7 @@ export const pratos: Prato[] = [
         nome: 'Pizza Margherita',
         descricao: 'Molho de tomate, mussarela premium e manjericão fresco.',
         preco: 45.90,
-        imagem: 'https://images.unsplash.com/photo-1574071318508-1cdbad80ad38?q=80&w=800&auto=format&fit=crop',
+        imagem: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=800&auto=format&fit=crop',
         categoria: 'Pizzas'
     },
     {
@@ -14,7 +14,7 @@ export const pratos: Prato[] = [
         nome: 'Burger Artesanal',
         descricao: 'Blend 180g, queijo cheddar, bacon crocante e maionese da casa.',
         preco: 32.00,
-        imagem: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800&auto=format&fit=crop',
+        imagem: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=800&auto=format&fit=crop',
         categoria: 'Hambúrgueres'
     },
     {
@@ -30,7 +30,7 @@ export const pratos: Prato[] = [
         nome: 'Pasta Carbonara',
         descricao: 'Espaguete al dente com molho cremoso de ovos e guanciale.',
         preco: 42.50,
-        imagem: 'https://images.unsplash.com/photo-1612874742237-6526221588e3?q=80&w=800&auto=format&fit=crop',
+        imagem: 'https://images.unsplash.com/photo-1546548970-71785318a17b?q=80&w=800&auto=format&fit=crop',
         categoria: 'Massas'
     },
     {

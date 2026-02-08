@@ -1,3 +1,6 @@
+export type UserRole = 'cliente' | 'empresa';
+export type StatusPedido = 'pendente' | 'preparando' | 'enviado' | 'concluido' | 'cancelado';
+
 export interface Prato {
   id: string;
   nome: string;
@@ -5,9 +8,11 @@ export interface Prato {
   preco: number;
   imagem: string;
   categoria: string;
+  favorito?: boolean;
 }
 
-export interface ItemCarrinho extends Prato {
+export interface ItemCarrinho {
+  prato: Prato;
   quantidade: number;
 }
 
@@ -16,5 +21,6 @@ export interface Pedido {
   itens: ItemCarrinho[];
   total: number;
   data: string;
-  status: 'pendente' | 'concluido';
+  status: StatusPedido;
+  cupom?: string;
 }

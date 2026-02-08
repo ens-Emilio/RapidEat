@@ -1,6 +1,7 @@
-import { Plus, Info } from 'lucide-react';
-import { useDeliveryStore } from '../stores/useDeliveryStore';
-import type { Prato } from '../types';
+import { Plus, Info, Heart } from 'lucide-react'; // icons
+import { useDeliveryStore } from '../../stores/deliveryStore';
+import type { Prato } from '../../types';
+import { showToast } from '../../utils/toast';
 
 interface CardPratoProps {
     prato: Prato;
@@ -8,6 +9,23 @@ interface CardPratoProps {
 
 export const CardPrato = ({ prato }: CardPratoProps) => {
     const addCarrinho = useDeliveryStore(s => s.addCarrinho);
+    const favoritos = useDeliveryStore(s => s.favoritos);
+    const toggleFavorito = useDeliveryStore(s => s.toggleFavorito);
+    const isFavorito = favoritos.includes(prato.id);
+
+    const handleAddCarrinho = () => {
+        addCarrinho(prato);
+        showToast.success('Adicionado ao carrinho!', prato.nome);
+    };
+
+    const handleToggleFavorito = () => {
+        toggleFavorito(prato.id);
+        if (isFavorito) {
+            showToast.info('Removido dos favoritos', prato.nome);
+        } else {
+            showToast.success('Adicionado aos favoritos!', prato.nome);
+        }
+    };
 
     return (
         <div className="group bg-white dark:bg-slate-900 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 dark:border-slate-800 flex flex-col h-full">
@@ -16,8 +34,20 @@ export const CardPrato = ({ prato }: CardPratoProps) => {
                     src={prato.imagem}
                     alt={prato.nome}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    onError={(e) => {
+                        (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=800&auto=format&fit=crop';
+                    }}
                 />
-                <div className="absolute top-3 right-3">
+                <div className="absolute top-3 right-3 flex flex-col gap-2">
+                    <button
+                        onClick={handleToggleFavorito}
+                        className={`p-2 rounded-full backdrop-blur-md transition-all shadow-sm ${isFavorito
+                            ? 'bg-red-500 text-white'
+                            : 'bg-white/90 dark:bg-slate-900/90 text-slate-400 hover:text-red-500'
+                            }`}
+                    >
+                        <Heart size={18} fill={isFavorito ? 'currentColor' : 'none'} />
+                    </button>
                     <span className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-orange-600 dark:text-orange-400 shadow-sm">
                         {prato.categoria}
                     </span>
@@ -43,7 +73,7 @@ export const CardPrato = ({ prato }: CardPratoProps) => {
                         R$ {prato.preco.toFixed(2).replace('.', ',')}
                     </span>
                     <button
-                        onClick={() => addCarrinho(prato)}
+                        onClick={handleAddCarrinho}
                         className="bg-orange-500 hover:bg-orange-600 text-white p-2.5 rounded-xl transition-all active:scale-95 shadow-lg shadow-orange-500/20 flex items-center gap-2 pr-4 pl-3"
                     >
                         <Plus size={20} />
