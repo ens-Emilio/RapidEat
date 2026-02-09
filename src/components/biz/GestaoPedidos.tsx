@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useDeliveryStore } from '../../stores/deliveryStore';
-import { Package, Calendar, Clock, Truck, Check, X, ChevronDown } from 'lucide-react';
+import { Package, Calendar, Clock, Truck, Check, X, ChevronDown, User, Phone, MapPin } from 'lucide-react';
 import type { StatusPedido } from '../../types';
 
 export const GestãoPedidos = () => {
@@ -163,6 +163,31 @@ export const GestãoPedidos = () => {
                                             </span>
                                         </div>
                                     ))}
+                                </div>
+
+                                {/* Cliente */}
+                                <div className="mb-6 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+                                    <h4 className="text-[10px] uppercase font-black tracking-widest text-slate-400 mb-3 flex items-center gap-2">
+                                        <User size={12} className="text-indigo-500" /> Destinatário
+                                    </h4>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <p className="text-sm font-bold text-slate-800 dark:text-slate-200">{pedido.cliente?.nome || 'Cliente não identificado'}</p>
+                                            <p className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1 mt-1">
+                                                <Phone size={10} /> {pedido.cliente?.telefone || 'Sem telefone'}
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p className="text-xs text-slate-500 dark:text-slate-400 flex items-start gap-1">
+                                                <MapPin size={10} className="mt-0.5 shrink-0" />
+                                                <span>
+                                                    {pedido.cliente?.endereco || 'Endereço não informado'}
+                                                    <br />
+                                                    {pedido.cliente?.cidade}
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 {/* Alterar Status */}

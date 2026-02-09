@@ -25,7 +25,7 @@ interface DeliveryStore {
     addCarrinho: (prato: Prato, qty?: number) => void;
     updateQty: (id: string, delta: number) => void;
     aplicarCupom: (codigo: string) => boolean;
-    finalizarPedido: () => void;
+    finalizarPedido: (cliente: { nome: string; telefone: string; endereco: string; cidade: string }) => void;
 
     // Filtros
     setSearchQuery: (query: string) => void;
@@ -188,7 +188,7 @@ export const useDeliveryStore = create<DeliveryStore>()(
                 return false;
             },
 
-            finalizarPedido: () => {
+            finalizarPedido: (cliente) => {
                 const { carrinho, cupomAtivo } = get();
                 if (!carrinho.length) {
                     toast.error('Seu carrinho está vazio!');
@@ -206,7 +206,8 @@ export const useDeliveryStore = create<DeliveryStore>()(
                     total,
                     data: new Date().toISOString(),
                     status: 'pendente',
-                    cupom: cupomAtivo || undefined
+                    cupom: cupomAtivo || undefined,
+                    cliente
                 };
 
                 set({

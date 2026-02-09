@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Trash2, Plus, Minus, ArrowRight, ShoppingBag, Info } from 'lucide-react';
 import { useDeliveryStore } from '../stores/deliveryStore';
+import { useUserStore } from '../stores/useUserStore';
 import { Link, useNavigate } from 'react-router-dom';
 import { CupomInput } from '../components/client/CupomInput';
 import { ResumoCarrinho } from '../components/client/ResumoCarrinho';
@@ -14,6 +15,7 @@ export const Carrinho = () => {
         updateQty,
         finalizarPedido
     } = useDeliveryStore();
+    const { profile } = useUserStore();
 
     const { quantidadeItens, total } = useCarrinhoTotais();
     const navigate = useNavigate();
@@ -27,7 +29,7 @@ export const Carrinho = () => {
         // Simular delay de processamento
         await new Promise(resolve => setTimeout(resolve, 1000));
 
-        finalizarPedido();
+        finalizarPedido(profile);
 
         showToast.success(
             'Pedido realizado com sucesso!',

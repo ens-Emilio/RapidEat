@@ -1,5 +1,3 @@
-import logoImg from '../assets/001.png';
-
 interface RapidEatLogoProps {
     size?: 'sm' | 'md' | 'lg';
     showText?: boolean;
@@ -11,73 +9,69 @@ export const RapidEatLogo = ({
     showText = true,
     variant = 'cliente'
 }: RapidEatLogoProps) => {
-    const sizeMap = {
-        sm: { icon: 32, text: 18 },
-        md: { icon: 48, text: 24 },
-        lg: { icon: 64, text: 32 }
+    const heightMap = {
+        sm: 32,
+        md: 48,
+        lg: 64
     };
 
-    const dimensions = sizeMap[size];
+    const height = heightMap[size];
+    // Scale width proportional to the viewBox (620x150)
+    // If text is hidden, icon is roughly 180 wide in a 150 height context
+    const width = showText ? (620 / 150) * height : (180 / 150) * height;
+    const viewBox = showText ? "0 0 620 150" : "0 0 180 150";
+
+    const mainColor = variant === 'empresa' ? '#6366f1' : '#FF8C00';
+    const accentColor = variant === 'empresa' ? '#4338ca' : '#FF4500';
 
     return (
-        <div className="flex items-center gap-3">
-            {/* Icon only - simplified version */}
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width={dimensions.icon}
-                height={dimensions.icon}
-                viewBox="0 0 120 120"
-                role="img"
-                aria-label="RapidEat icon"
-                className="transition-all duration-300"
-            >
-                <defs>
-                    <linearGradient id={`reGrad-${variant}`} x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0" stopColor={variant === 'empresa' ? '#6366f1' : '#FF8A00'} />
-                        <stop offset="1" stopColor={variant === 'empresa' ? '#4338ca' : '#FF4D00'} />
-                    </linearGradient>
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={width}
+            height={height}
+            viewBox={viewBox}
+            role="img"
+            aria-label="RapidEat Logo"
+            className="transition-all duration-300"
+        >
+            <defs>
+                <linearGradient id={`mainGradient-${variant}`} x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style={{ stopColor: mainColor, stopOpacity: 1 }} />
+                    <stop offset="100%" style={{ stopColor: accentColor, stopOpacity: 1 }} />
+                </linearGradient>
+            </defs>
 
-                    <clipPath id="logoClip">
-                        <rect x="0" y="0" width="120" height="120" rx="22" />
-                    </clipPath>
-                </defs>
+            {/* Grupo do Ícone (Prato Rápido) */}
+            <g transform="translate(10, 10)">
+                {/* Linhas de Velocidade */}
+                <path d="M10,65 L50,65" stroke={accentColor} strokeWidth="8" strokeLinecap="round" opacity="0.6" />
+                <path d="M25,85 L60,85" stroke={accentColor} strokeWidth="8" strokeLinecap="round" opacity="0.8" />
+                <path d="M5,45 L40,45" stroke={accentColor} strokeWidth="8" strokeLinecap="round" opacity="0.4" />
 
-                {variant === 'cliente' ? (
-                    <image
-                        href={logoImg}
-                        width="120"
-                        height="120"
-                        clipPath="url(#logoClip)"
-                    />
-                ) : (
-                    <>
-                        <rect x="0" y="0" width="120" height="120" rx="22" fill={`url(#reGrad-${variant})`} />
-                        {/* Fork (left) */}
-                        <g transform="translate(34 32)" fill="#fff">
-                            <rect x="0" y="0" width="8" height="42" rx="4" />
-                            <rect x="-10" y="0" width="6" height="18" rx="3" />
-                            <rect x="12" y="0" width="6" height="18" rx="3" />
-                            <rect x="26" y="0" width="6" height="18" rx="3" />
-                        </g>
+                {/* A Cloche (Tampa do Prato) */}
+                <g transform="skewX(-15) translate(40,0)">
+                    <rect x="35" y="90" width="110" height="10" rx="2" className="fill-[#333333] dark:fill-gray-100" />
+                    <path d="M40,90 Q40,20 90,20 Q140,20 140,90 Z" fill={`url(#mainGradient-${variant})`} />
+                    <circle cx="90" cy="20" r="8" className="fill-[#333333] dark:fill-gray-100" />
+                    <path d="M60,40 Q70,30 85,35" fill="none" stroke="white" strokeWidth="4" strokeLinecap="round" opacity="0.5" />
+                </g>
+            </g>
 
-                        {/* Knife (right) */}
-                        <g transform="translate(74 28)" fill="#fff">
-                            <path d="M10 0c8 10 8 28 0 38v42c0 4-3 7-7 7s-7-3-7-7V38C-2 28-2 10 6 0h4z" />
-                        </g>
-                    </>
-                )}
-            </svg>
-
-            {/* Text */}
             {showText && (
-                <span
-                    className={`font-black tracking-tight transition-colors duration-300 ${variant === 'empresa' ? 'text-indigo-600 dark:text-indigo-400' : 'text-orange-600 dark:text-orange-400'
-                        }`}
-                    style={{ fontSize: `${dimensions.text}px` }}
-                >
-                    RapidEat
-                </span>
+                <>
+                    {/* Texto do Logo */}
+                    <text x="210" y="100" className="font-sans italic font-extrabold" style={{ fontSize: '72px' }}>
+                        <tspan fill={`url(#mainGradient-${variant})`}>Rapid</tspan>
+                        <tspan className="fill-[#333333] dark:fill-gray-100">Eat</tspan>
+                    </text>
+
+                    {/* Slogan */}
+                    <text x="350" y="130" textAnchor="middle" className="font-sans fill-gray-500 dark:fill-gray-400" style={{ fontSize: '16px', letterSpacing: '3px' }}>
+                        DELIVERY
+                    </text>
+                </>
             )}
-        </div>
+        </svg>
     );
 };
+

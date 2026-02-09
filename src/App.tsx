@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { Header } from './components/Header';
 import { Home } from './pages/Home';
@@ -12,6 +12,27 @@ import { CrudPratos } from './components/biz/CrudPratos';
 import { useDeliveryStore } from './stores/deliveryStore';
 import { useMultiTabSync } from './hooks/useMultiTabSync';
 import { FloatingModeToggle } from './components/FloatingModeToggle';
+
+// Componente para gerenciar navegação automática baseada no modo
+const NavigationHandler = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const viewMode = useDeliveryStore(s => s.viewMode);
+
+  useEffect(() => {
+    const isRootAdmin = location.pathname.startsWith('/admin');
+
+    if (viewMode === 'empresa' && !isRootAdmin) {
+      // Se trocou para empresa mas não está em uma rota admin
+      navigate('/admin');
+    } else if (viewMode === 'cliente' && isRootAdmin) {
+      // Se trocou para cliente mas está em rota admin
+      navigate('/');
+    }
+  }, [viewMode, navigate, location.pathname]);
+
+  return null;
+};
 
 function App() {
   const isDarkMode = useDeliveryStore(s => s.isDarkMode);
@@ -29,6 +50,7 @@ function App() {
 
   return (
     <Router>
+      <NavigationHandler />
       <Toaster position="bottom-right" reverseOrder={false} />
       <FloatingModeToggle />
       <div className="min-h-screen flex flex-col transition-colors duration-500 bg-slate-50 dark:bg-slate-950">
@@ -57,3 +79,4 @@ function App() {
 }
 
 export default App;
+

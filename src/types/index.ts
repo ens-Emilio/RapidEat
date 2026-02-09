@@ -23,4 +23,10 @@ export interface Pedido {
   data: string;
   status: StatusPedido;
   cupom?: string;
+  cliente: {
+    nome: string;
+    telefone: string;
+    endereco: string;
+    cidade: string;
+  };
 }

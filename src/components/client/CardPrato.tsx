@@ -1,4 +1,5 @@
-import { Plus, Info, Heart } from 'lucide-react'; // icons
+import { useState } from 'react';
+import { Plus, Info, Heart, X, ShoppingBag } from 'lucide-react';
 import { useDeliveryStore } from '../../stores/deliveryStore';
 import type { Prato } from '../../types';
 import { showToast } from '../../utils/toast';
@@ -12,13 +13,15 @@ export const CardPrato = ({ prato }: CardPratoProps) => {
     const favoritos = useDeliveryStore(s => s.favoritos);
     const toggleFavorito = useDeliveryStore(s => s.toggleFavorito);
     const isFavorito = favoritos.includes(prato.id);
+    const [isDetailOpen, setIsDetailOpen] = useState(false);
 
     const handleAddCarrinho = () => {
         addCarrinho(prato);
         showToast.success('Adicionado ao carrinho!', prato.nome);
     };
 
-    const handleToggleFavorito = () => {
+    const handleToggleFavorito = (e: React.MouseEvent) => {
+        e.stopPropagation();
         toggleFavorito(prato.id);
         if (isFavorito) {
             showToast.info('Removido dos favoritos', prato.nome);
@@ -28,59 +31,155 @@ export const CardPrato = ({ prato }: CardPratoProps) => {
     };
 
     return (
-        <div className="group bg-white dark:bg-slate-900 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 dark:border-slate-800 flex flex-col h-full">
-            <div className="relative overflow-hidden h-48">
-                <img
-                    src={prato.imagem}
-                    alt={prato.nome}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    onError={(e) => {
-                        (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=800&auto=format&fit=crop';
-                    }}
-                />
-                <div className="absolute top-3 right-3 flex flex-col gap-2">
-                    <button
-                        onClick={handleToggleFavorito}
-                        className={`p-2 rounded-full backdrop-blur-md transition-all shadow-sm ${isFavorito
-                            ? 'bg-red-500 text-white'
-                            : 'bg-white/90 dark:bg-slate-900/90 text-slate-400 hover:text-red-500'
-                            }`}
-                    >
-                        <Heart size={18} fill={isFavorito ? 'currentColor' : 'none'} />
-                    </button>
-                    <span className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-orange-600 dark:text-orange-400 shadow-sm">
-                        {prato.categoria}
-                    </span>
+        <>
+            <div
+                onClick={() => setIsDetailOpen(true)}
+                className="group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-slate-100 dark:border-slate-800 flex flex-col h-full cursor-pointer hover:-translate-y-1"
+            >
+                <div className="relative overflow-hidden h-48 md:h-56">
+                    <img
+                        src={prato.imagem}
+                        alt={prato.nome}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        onError={(e) => {
+                            (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=800&auto=format&fit=crop';
+                        }}
+                    />
+                    <div className="absolute top-4 right-4 flex flex-col gap-2">
+                        <button
+                            onClick={handleToggleFavorito}
+                            className={`p-2.5 rounded-full backdrop-blur-md transition-all shadow-lg ${isFavorito
+                                ? 'bg-red-500 text-white'
+                                : 'bg-white/90 dark:bg-slate-900/90 text-slate-400 hover:text-red-500'
+                                }`}
+                        >
+                            <Heart size={20} fill={isFavorito ? 'currentColor' : 'none'} />
+                        </button>
+                    </div>
+                    <div className="absolute bottom-4 left-4">
+                        <span className="bg-orange-500/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] uppercase font-black text-white shadow-lg tracking-wider">
+                            {prato.categoria}
+                        </span>
+                    </div>
+                </div>
+
+                <div className="p-6 flex flex-col flex-1">
+                    <div className="flex justify-between items-start mb-3">
+                        <h3 className="text-xl font-black text-slate-800 dark:text-slate-100 leading-tight group-hover:text-orange-500 transition-colors">
+                            {prato.nome}
+                        </h3>
+                        <div className="text-slate-300 dark:text-slate-700">
+                            <Info size={18} />
+                        </div>
+                    </div>
+
+                    <p className="text-slate-500 dark:text-slate-400 text-sm mb-6 line-clamp-2 font-medium leading-relaxed">
+                        {prato.descricao}
+                    </p>
+
+                    <div className="mt-auto flex items-center justify-between pt-4 border-t border-slate-50 dark:border-slate-800">
+                        <div className="flex flex-col">
+                            <span className="text-[10px] uppercase font-black text-slate-400 tracking-widest">Preço</span>
+                            <span className="text-xl font-black text-slate-900 dark:text-slate-100">
+                                R$ {prato.preco.toFixed(2).replace('.', ',')}
+                            </span>
+                        </div>
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                handleAddCarrinho();
+                            }}
+                            className="bg-orange-500 hover:bg-orange-600 text-white p-3 rounded-2xl transition-all active:scale-90 shadow-xl shadow-orange-500/20 flex items-center justify-center group/btn"
+                        >
+                            <Plus size={24} className="group-hover/btn:rotate-90 transition-transform" />
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div className="p-5 flex flex-col flex-1">
-                <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100 leading-tight">
-                        {prato.nome}
-                    </h3>
-                    <button className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition">
-                        <Info size={18} />
-                    </button>
-                </div>
-
-                <p className="text-slate-500 dark:text-slate-400 text-sm mb-4 line-clamp-2">
-                    {prato.descricao}
-                </p>
-
-                <div className="mt-auto flex items-center justify-between pt-2">
-                    <span className="text-xl font-black text-orange-600 dark:text-orange-400">
-                        R$ {prato.preco.toFixed(2).replace('.', ',')}
-                    </span>
-                    <button
-                        onClick={handleAddCarrinho}
-                        className="bg-orange-500 hover:bg-orange-600 text-white p-2.5 rounded-xl transition-all active:scale-95 shadow-lg shadow-orange-500/20 flex items-center gap-2 pr-4 pl-3"
+            {/* Modal de Detalhes */}
+            {isDetailOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-300">
+                    <div
+                        className="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-[2.5rem] overflow-hidden shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-8 duration-500 max-h-[90vh] flex flex-col"
+                        onClick={(e) => e.stopPropagation()}
                     >
-                        <Plus size={20} />
-                        <span className="font-bold text-sm">Adicionar</span>
-                    </button>
+                        <div className="relative h-64 sm:h-80 shrink-0">
+                            <img
+                                src={prato.imagem}
+                                alt={prato.nome}
+                                className="w-full h-full object-cover"
+                            />
+                            <button
+                                onClick={() => setIsDetailOpen(false)}
+                                className="absolute top-6 right-6 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md p-3 rounded-full shadow-xl text-slate-800 dark:text-slate-100 hover:scale-110 active:scale-90 transition-all border border-slate-100/50 dark:border-slate-800/50 z-10"
+                            >
+                                <X size={24} />
+                            </button>
+                            <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-slate-900 via-transparent to-transparent opacity-60" />
+                        </div>
+
+                        <div className="p-8 sm:p-10 overflow-y-auto">
+                            <div className="flex items-center gap-3 mb-4">
+                                <span className="bg-orange-100 dark:bg-orange-950/50 text-orange-600 dark:text-orange-400 text-[10px] uppercase font-black px-3 py-1 rounded-full tracking-widest">
+                                    {prato.categoria}
+                                </span>
+                                {isFavorito && (
+                                    <span className="bg-pink-100 dark:bg-pink-950/50 text-pink-600 dark:text-pink-400 text-[10px] uppercase font-black px-3 py-1 rounded-full tracking-widest flex items-center gap-1">
+                                        <Heart size={10} fill="currentColor" /> Favorito
+                                    </span>
+                                )}
+                            </div>
+
+                            <h2 className="text-3xl sm:text-4xl font-black text-slate-800 dark:text-slate-100 mb-6 leading-tight">
+                                {prato.nome}
+                            </h2>
+
+                            <div className="space-y-6 text-slate-600 dark:text-slate-300">
+                                <div>
+                                    <h4 className="text-xs uppercase font-black text-slate-400 tracking-widest mb-3">Sobre este prato</h4>
+                                    <p className="text-lg leading-relaxed font-medium">
+                                        {prato.descricao}
+                                    </p>
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-4 py-6 border-y border-slate-100 dark:border-slate-800">
+                                    <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50">
+                                        <p className="text-[10px] uppercase font-black text-slate-400 tracking-widest mb-1">Tempo Médio</p>
+                                        <p className="font-bold text-slate-800 dark:text-slate-200">25-35 min</p>
+                                    </div>
+                                    <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50">
+                                        <p className="text-[10px] uppercase font-black text-slate-400 tracking-widest mb-1">Peso/Tamanho</p>
+                                        <p className="font-bold text-slate-800 dark:text-slate-200">Individual (aprox. 450g)</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="mt-10 flex flex-col sm:flex-row items-center gap-6">
+                                <div className="text-center sm:text-left shrink-0">
+                                    <p className="text-xs uppercase font-black text-slate-400 tracking-widest mb-1">Preço Total</p>
+                                    <p className="text-3xl font-black text-orange-500">
+                                        R$ {prato.preco.toFixed(2).replace('.', ',')}
+                                    </p>
+                                </div>
+                                <button
+                                    onClick={() => {
+                                        handleAddCarrinho();
+                                        setIsDetailOpen(false);
+                                    }}
+                                    className="w-full bg-orange-500 hover:bg-orange-600 text-white font-black py-5 px-8 rounded-[1.5rem] shadow-2xl shadow-orange-500/30 transition-all hover:-translate-y-1 active:translate-y-0 flex items-center justify-center gap-3 text-lg"
+                                >
+                                    <ShoppingBag size={24} />
+                                    Adicionar ao Carrinho
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {/* Background overlay click to close */}
+                    <div className="absolute inset-0 -z-10" onClick={() => setIsDetailOpen(false)} />
                 </div>
-            </div>
-        </div>
+            )}
+        </>
     );
 };
+
