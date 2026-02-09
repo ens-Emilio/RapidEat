@@ -148,10 +148,6 @@ app-delivery/
 │   ├── index.css                   # Estilos globais
 │   └── main.tsx                    # Entry point
 ├── public/                         # Assets estáticos
-├── IMPLEMENTACAO_FASE1.md          # Docs Fase 1
-├── IMPLEMENTACAO_FASE2.md          # Docs Fase 2
-├── IMPLEMENTACAO_FASE3.md          # Docs Fase 3
-├── IMPLEMENTACAO_FASE4.md          # Docs Fase 4
 └── README.md                       # Este arquivo
 ```
 
@@ -365,7 +361,7 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalh
 
 ## 👨‍💻 Autor
 
-Desenvolvido com ❤️ e ☕
+Desenvolvido por ens-Emilio
 
 ---
 
