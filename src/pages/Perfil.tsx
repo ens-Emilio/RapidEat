@@ -3,7 +3,7 @@ import { useUserStore } from '../stores/useUserStore';
 import { useDeliveryStore } from '../stores/deliveryStore';
 import {
     User, Phone, MapPin, Building, Save, CheckCircle, Package,
-    Heart, Star, Camera, ChevronRight, Ticket, Settings, Bell,
+    Heart, Star, Camera, ChevronRight, Ticket, Settings,
     Lock, ExternalLink, Trash2, Plus
 } from 'lucide-react';
 import { CUPONS_VALIDOS } from '../utils/cupons';
@@ -335,8 +335,8 @@ export const Perfil = () => {
                                             key={item.id}
                                             onClick={() => setActiveTab(item.id as TabType)}
                                             className={`w-full flex items-center justify-between p-4 rounded-2xl transition-all group ${isActive
-                                                    ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/30'
-                                                    : 'hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300'
+                                                ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/30'
+                                                : 'hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300'
                                                 }`}
                                         >
                                             <div className="flex items-center gap-3">
