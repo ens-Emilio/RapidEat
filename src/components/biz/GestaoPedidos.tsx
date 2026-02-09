@@ -4,7 +4,8 @@ import { Package, Calendar, Clock, Truck, Check, X, ChevronDown } from 'lucide-r
 import type { StatusPedido } from '../../types';
 
 export const GestãoPedidos = () => {
-    const { pedidos, updateStatusPedido } = useDeliveryStore();
+    const pedidos = useDeliveryStore((state) => state.pedidos);
+    const updateStatusPedido = useDeliveryStore((state) => state.updateStatusPedido);
     const [filtroStatus, setFiltroStatus] = useState<StatusPedido | 'todos'>('todos');
     const [ordenacao, setOrdenacao] = useState<'recente' | 'antigo' | 'valor'>('recente');
 
@@ -69,8 +70,8 @@ export const GestãoPedidos = () => {
                     <button
                         onClick={() => setFiltroStatus('todos')}
                         className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${filtroStatus === 'todos'
-                                ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/30'
-                                : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                            ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/30'
+                            : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
                             }`}
                     >
                         Todos ({pedidos.length})
@@ -85,8 +86,8 @@ export const GestãoPedidos = () => {
                                 key={status}
                                 onClick={() => setFiltroStatus(status)}
                                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${filtroStatus === status
-                                        ? `${config.bg} ${config.color} shadow-md`
-                                        : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                                    ? `${config.bg} ${config.color} shadow-md`
+                                    : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
                                     }`}
                             >
                                 {config.label} ({count})

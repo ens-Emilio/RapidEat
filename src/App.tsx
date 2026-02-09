@@ -11,6 +11,7 @@ import { PedidosBiz } from './pages/PedidosBiz';
 import { CrudPratos } from './components/biz/CrudPratos';
 import { useDeliveryStore } from './stores/deliveryStore';
 import { useMultiTabSync } from './hooks/useMultiTabSync';
+import { FloatingModeToggle } from './components/FloatingModeToggle';
 
 function App() {
   const isDarkMode = useDeliveryStore(s => s.isDarkMode);
@@ -29,6 +30,7 @@ function App() {
   return (
     <Router>
       <Toaster position="bottom-right" reverseOrder={false} />
+      <FloatingModeToggle />
       <div className="min-h-screen flex flex-col transition-colors duration-500 bg-slate-50 dark:bg-slate-950">
         <Header />
         <main className="flex-1">

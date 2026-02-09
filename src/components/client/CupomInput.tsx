@@ -5,10 +5,8 @@ import { CUPONS_VALIDOS } from '../../utils/cupons';
 
 export const CupomInput = () => {
     const [inputCupom, setInputCupom] = useState('');
-    const { cupomAtivo, aplicarCupom } = useDeliveryStore((state) => ({
-        cupomAtivo: state.cupomAtivo,
-        aplicarCupom: state.aplicarCupom,
-    }));
+    const cupomAtivo = useDeliveryStore((state) => state.cupomAtivo);
+    const aplicarCupom = useDeliveryStore((state) => state.aplicarCupom);
 
     const handleAplicar = () => {
         if (inputCupom.trim()) {

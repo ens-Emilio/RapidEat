@@ -3,10 +3,8 @@ import { useDeliveryStore } from '../../stores/deliveryStore';
 import { CardPrato } from './CardPrato';
 
 export const Favoritos = () => {
-    const { pratos, favoritos } = useDeliveryStore((state) => ({
-        pratos: state.pratos,
-        favoritos: state.favoritos,
-    }));
+    const pratos = useDeliveryStore((state) => state.pratos);
+    const favoritos = useDeliveryStore((state) => state.favoritos);
 
     const pratosFavoritos = pratos.filter((prato) => favoritos.includes(prato.id));
 
