@@ -28,7 +28,7 @@ export const SearchBar = () => {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Buscar pratos, ingredientes..."
-                    className="w-full pl-12 pr-12 py-3.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 dark:focus:ring-orange-400 transition-all shadow-sm"
+                    className="w-full pl-12 pr-12 py-3.5 rounded-2xl input-fluid text-slate-900 dark:text-slate-100 placeholder:text-slate-400 shadow-sm"
                 />
                 {searchQuery && (
                     <button
@@ -51,7 +51,7 @@ export const SearchBar = () => {
                 {/* Botão "Todos" */}
                 <button
                     onClick={() => setCategoriaFiltro(null)}
-                    className={`px-4 py-2 rounded-full font-medium text-sm transition-all shrink-0 ${categoriaFiltro === null
+                    className={`px-4 py-2 rounded-full font-medium text-sm btn-premium shrink-0 ${categoriaFiltro === null
                         ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/30'
                         : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
                         }`}
@@ -64,7 +64,7 @@ export const SearchBar = () => {
                     <button
                         key={categoria}
                         onClick={() => setCategoriaFiltro(categoria)}
-                        className={`px-4 py-2 rounded-full font-medium text-sm transition-all shrink-0 ${categoriaFiltro === categoria
+                        className={`px-4 py-2 rounded-full font-medium text-sm btn-premium shrink-0 ${categoriaFiltro === categoria
                             ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/30'
                             : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
                             }`}

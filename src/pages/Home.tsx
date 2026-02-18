@@ -18,10 +18,10 @@ export const Home = () => {
     return (
         <div className="container mx-auto px-4 py-8">
             {/* Hero Section */}
-            <div className="mb-8">
+            <div className="mb-8 animate-fade-in">
                 <div className="flex items-center gap-2 mb-3">
                     <Sparkles className="w-6 h-6 text-orange-500" />
-                    <h1 className="text-3xl md:text-4xl font-black text-slate-800 dark:text-slate-100">
+                    <h1 className="text-3xl md:text-4xl font-black text-slate-800 dark:text-slate-100 uppercase tracking-tight">
                         O que vamos comer hoje?
                     </h1>
                 </div>
@@ -31,17 +31,17 @@ export const Home = () => {
             </div>
 
             {/* Barra de Busca e Filtros */}
-            <div className="mb-8">
+            <div className="mb-8 animate-slide-up" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
                 <SearchBar />
             </div>
 
             {/* Toggle Favoritos */}
-            <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center gap-3 mb-6 animate-slide-up" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
                 <button
                     onClick={() => setMostrarApenasFavoritos(!mostrarApenasFavoritos)}
-                    className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-bold transition-all text-sm shadow-sm ${mostrarApenasFavoritos
-                            ? 'bg-red-500 text-white shadow-lg shadow-red-500/30 scale-105'
-                            : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800'
+                    className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-bold btn-premium text-sm shadow-sm ${mostrarApenasFavoritos
+                        ? 'bg-red-500 text-white shadow-lg shadow-red-500/30'
+                        : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800'
                         }`}
                 >
                     <Heart size={16} fill={mostrarApenasFavoritos ? 'currentColor' : 'none'} />
@@ -56,7 +56,7 @@ export const Home = () => {
 
             {/* Grid de Pratos */}
             {pratosExibidos.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 stagger-container">
                     {pratosExibidos.map(prato => (
                         <CardPrato key={prato.id} prato={prato} />
                     ))}

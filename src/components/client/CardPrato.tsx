@@ -34,7 +34,7 @@ export const CardPrato = ({ prato }: CardPratoProps) => {
         <>
             <div
                 onClick={() => setIsDetailOpen(true)}
-                className="group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-slate-100 dark:border-slate-800 flex flex-col h-full cursor-pointer hover:-translate-y-1"
+                className="group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-800 flex flex-col h-full cursor-pointer card-hover"
             >
                 <div className="relative overflow-hidden h-48 md:h-56">
                     <img
@@ -48,7 +48,7 @@ export const CardPrato = ({ prato }: CardPratoProps) => {
                     <div className="absolute top-4 right-4 flex flex-col gap-2">
                         <button
                             onClick={handleToggleFavorito}
-                            className={`p-2.5 rounded-full backdrop-blur-md transition-all shadow-lg ${isFavorito
+                            className={`p-2.5 rounded-full backdrop-blur-md btn-premium shadow-lg ${isFavorito
                                 ? 'bg-red-500 text-white'
                                 : 'bg-white/90 dark:bg-slate-900/90 text-slate-400 hover:text-red-500'
                                 }`}
@@ -89,9 +89,9 @@ export const CardPrato = ({ prato }: CardPratoProps) => {
                                 e.stopPropagation();
                                 handleAddCarrinho();
                             }}
-                            className="bg-orange-500 hover:bg-orange-600 text-white p-3 rounded-2xl transition-all active:scale-90 shadow-xl shadow-orange-500/20 flex items-center justify-center group/btn"
+                            className="bg-orange-500 hover:bg-orange-600 text-white p-3 rounded-2xl btn-premium shadow-xl shadow-orange-500/20 flex items-center justify-center group/btn"
                         >
-                            <Plus size={24} className="group-hover/btn:rotate-90 transition-transform" />
+                            <Plus size={24} className="group-hover/btn:rotate-90 transition-transform duration-500" />
                         </button>
                     </div>
                 </div>
@@ -99,16 +99,17 @@ export const CardPrato = ({ prato }: CardPratoProps) => {
 
             {/* Modal de Detalhes */}
             {isDetailOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-300">
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
                     <div
-                        className="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-[2.5rem] overflow-hidden shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-8 duration-500 max-h-[90vh] flex flex-col"
+                        className="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-[2.5rem] overflow-hidden shadow-2xl animate-scale-in max-h-[90vh] flex flex-col"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <div className="relative h-64 sm:h-80 shrink-0">
+                        <div className="relative h-64 sm:h-80 shrink-0 overflow-hidden">
                             <img
                                 src={prato.imagem}
                                 alt={prato.nome}
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-cover animate-scale-in"
+                                style={{ animationDuration: '0.6s' }}
                             />
                             <button
                                 onClick={() => setIsDetailOpen(false)}
@@ -120,7 +121,7 @@ export const CardPrato = ({ prato }: CardPratoProps) => {
                         </div>
 
                         <div className="p-8 sm:p-10 overflow-y-auto">
-                            <div className="flex items-center gap-3 mb-4">
+                            <div className="flex items-center gap-3 mb-4 animate-slide-up" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
                                 <span className="bg-orange-100 dark:bg-orange-950/50 text-orange-600 dark:text-orange-400 text-[10px] uppercase font-black px-3 py-1 rounded-full tracking-widest">
                                     {prato.categoria}
                                 </span>
@@ -131,19 +132,19 @@ export const CardPrato = ({ prato }: CardPratoProps) => {
                                 )}
                             </div>
 
-                            <h2 className="text-3xl sm:text-4xl font-black text-slate-800 dark:text-slate-100 mb-6 leading-tight">
+                            <h2 className="text-3xl sm:text-4xl font-black text-slate-800 dark:text-slate-100 mb-6 leading-tight animate-slide-up" style={{ animationDelay: '0.15s', animationFillMode: 'both' }}>
                                 {prato.nome}
                             </h2>
 
                             <div className="space-y-6 text-slate-600 dark:text-slate-300">
-                                <div>
+                                <div className="animate-slide-up" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
                                     <h4 className="text-xs uppercase font-black text-slate-400 tracking-widest mb-3">Sobre este prato</h4>
                                     <p className="text-lg leading-relaxed font-medium">
                                         {prato.descricao}
                                     </p>
                                 </div>
 
-                                <div className="grid grid-cols-2 gap-4 py-6 border-y border-slate-100 dark:border-slate-800">
+                                <div className="grid grid-cols-2 gap-4 py-6 border-y border-slate-100 dark:border-slate-800 animate-slide-up" style={{ animationDelay: '0.25s', animationFillMode: 'both' }}>
                                     <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50">
                                         <p className="text-[10px] uppercase font-black text-slate-400 tracking-widest mb-1">Tempo Médio</p>
                                         <p className="font-bold text-slate-800 dark:text-slate-200">25-35 min</p>
@@ -155,7 +156,7 @@ export const CardPrato = ({ prato }: CardPratoProps) => {
                                 </div>
                             </div>
 
-                            <div className="mt-10 flex flex-col sm:flex-row items-center gap-6">
+                            <div className="mt-10 flex flex-col sm:flex-row items-center gap-6 animate-slide-up" style={{ animationDelay: '0.3s', animationFillMode: 'both' }}>
                                 <div className="text-center sm:text-left shrink-0">
                                     <p className="text-xs uppercase font-black text-slate-400 tracking-widest mb-1">Preço Total</p>
                                     <p className="text-3xl font-black text-orange-500">
@@ -167,7 +168,7 @@ export const CardPrato = ({ prato }: CardPratoProps) => {
                                         handleAddCarrinho();
                                         setIsDetailOpen(false);
                                     }}
-                                    className="w-full bg-orange-500 hover:bg-orange-600 text-white font-black py-5 px-8 rounded-[1.5rem] shadow-2xl shadow-orange-500/30 transition-all hover:-translate-y-1 active:translate-y-0 flex items-center justify-center gap-3 text-lg"
+                                    className="w-full bg-orange-500 hover:bg-orange-600 text-white font-black py-5 px-8 rounded-[1.5rem] shadow-2xl shadow-orange-500/30 btn-premium flex items-center justify-center gap-3 text-lg"
                                 >
                                     <ShoppingBag size={24} />
                                     Adicionar ao Carrinho
