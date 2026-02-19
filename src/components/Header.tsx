@@ -65,39 +65,37 @@ export const Header = () => {
                     )}
                 </nav>
 
-                <div className="flex items-center gap-3 md:gap-4">
-                    <div className="flex items-center gap-1 md:gap-2">
-                        <button
-                            onClick={toggleTheme}
-                            className="p-2.5 text-slate-500 dark:text-slate-400 hover:text-orange-500 btn-premium rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800/50"
-                        >
-                            {isDarkMode ? <Sun size={20} className="animate-scale-in" /> : <Moon size={20} className="animate-scale-in" />}
-                        </button>
+                <div className="flex items-center gap-2">
+                    <button
+                        onClick={toggleTheme}
+                        className="p-2.5 text-slate-500 dark:text-slate-400 hover:text-orange-500 btn-premium rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800/50"
+                    >
+                        {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+                    </button>
 
-                        <div className="h-6 w-px bg-slate-200 dark:bg-slate-800 mx-1 md:mx-2" />
+                    <div className="hidden sm:flex items-center gap-2">
+                        <div className="h-6 w-px bg-slate-200 dark:bg-slate-800 mx-2" />
 
-                        <div className="flex items-center gap-1 md:gap-2">
-                            {viewMode === 'cliente' && (
-                                <Link
-                                    to="/carrinho"
-                                    className={`relative p-2.5 btn-premium rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800/50 ${isActive('/carrinho') ? 'text-orange-500 bg-orange-50 dark:bg-orange-900/10' : 'text-slate-500 dark:text-slate-400 hover:text-orange-500'}`}
-                                >
-                                    <ShoppingCart size={22} />
-                                    {totalItens > 0 && (
-                                        <span className="absolute top-1.5 right-1.5 bg-orange-500 text-white text-[10px] font-bold min-w-[18px] h-[18px] flex items-center justify-center rounded-full border-2 border-white dark:border-slate-900 animate-scale-in">
-                                            {totalItens}
-                                        </span>
-                                    )}
-                                </Link>
-                            )}
-
+                        {viewMode === 'cliente' && (
                             <Link
-                                to="/perfil"
-                                className={`p-2.5 transition-all rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800/50 ${isActive('/perfil') ? 'text-orange-500 bg-orange-50 dark:bg-orange-900/10' : 'text-slate-500 dark:text-slate-400 hover:text-orange-500'}`}
+                                to="/carrinho"
+                                className={`relative p-2.5 btn-premium rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800/50 ${isActive('/carrinho') ? 'text-orange-500 bg-orange-50 dark:bg-orange-900/10' : 'text-slate-500 dark:text-slate-400 hover:text-orange-500'}`}
                             >
-                                <User size={22} />
+                                <ShoppingCart size={22} />
+                                {totalItens > 0 && (
+                                    <span className="absolute top-1.5 right-1.5 bg-orange-500 text-white text-[10px] font-bold min-w-[18px] h-[18px] flex items-center justify-center rounded-full border-2 border-white dark:border-slate-900 animate-scale-in">
+                                        {totalItens}
+                                    </span>
+                                )}
                             </Link>
-                        </div>
+                        )}
+
+                        <Link
+                            to="/perfil"
+                            className={`p-2.5 transition-all rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800/50 ${isActive('/perfil') ? 'text-orange-500 bg-orange-50 dark:bg-orange-900/10' : 'text-slate-500 dark:text-slate-400 hover:text-orange-500'}`}
+                        >
+                            <User size={22} />
+                        </Link>
                     </div>
                 </div>
             </div>

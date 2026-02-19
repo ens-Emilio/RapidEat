@@ -80,8 +80,13 @@
 
 /* Animações customizadas */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
@@ -89,6 +94,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -100,6 +106,7 @@
     opacity: 0;
     transform: translateX(30px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -111,6 +118,7 @@
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -118,8 +126,13 @@
 }
 
 @keyframes shimmer {
-  0% { background-position: -1000px 0; }
-  100% { background-position: 1000px 0; }
+  0% {
+    background-position: -1000px 0;
+  }
+
+  100% {
+    background-position: 1000px 0;
+  }
 }
 
 .animate-fade-in {
@@ -139,43 +152,60 @@
 }
 
 /* Orquestração de Entrada (Staggering) */
-.stagger-container > * {
+.stagger-container>* {
   opacity: 0;
   animation: slideUp 0.5s var(--ease-out-expo) forwards;
 }
 
-.stagger-container > *:nth-child(1) { animation-delay: 0.05s; }
-.stagger-container > *:nth-child(2) { animation-delay: 0.1s; }
-.stagger-container > *:nth-child(3) { animation-delay: 0.15s; }
-.stagger-container > *:nth-child(4) { animation-delay: 0.2s; }
-.stagger-container > *:nth-child(5) { animation-delay: 0.25s; }
-.stagger-container > *:nth-child(6) { animation-delay: 0.3s; }
+.stagger-container>*:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.stagger-container>*:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.stagger-container>*:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.stagger-container>*:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+.stagger-container>*:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+.stagger-container>*:nth-child(6) {
+  animation-delay: 0.3s;
+}
 
 /* Skeleton Loading Premium */
 .skeleton-premium {
-  background: linear-gradient(
-    90deg,
-    theme('colors.slate.200') 0%,
-    theme('colors.slate.50') 50%,
-    theme('colors.slate.200') 100%
-  );
+  background: linear-gradient(90deg,
+      theme('colors.slate.200') 0%,
+      theme('colors.slate.50') 50%,
+      theme('colors.slate.200') 100%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite linear;
 }
 
 .dark .skeleton-premium {
-  background: linear-gradient(
-    90deg,
-    theme('colors.slate.800') 0%,
-    theme('colors.slate.700') 50%,
-    theme('colors.slate.800') 100%
-  );
+  background: linear-gradient(90deg,
+      theme('colors.slate.800') 0%,
+      theme('colors.slate.700') 50%,
+      theme('colors.slate.800') 100%);
 }
 
 /* Transições suaves */
 .smooth-hover {
   @apply transition-all duration-300;
   transition-timing-function: var(--ease-out-expo);
+}
+
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .card-hover {

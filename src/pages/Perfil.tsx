@@ -324,8 +324,8 @@ export const Perfil = () => {
                         </div>
 
                         {/* Quick Links / Tabs */}
-                        <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-4 border border-slate-100 dark:border-slate-800 shadow-lg shadow-slate-200/50 dark:shadow-none">
-                            <div className="space-y-1">
+                        <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-2 md:p-4 border border-slate-100 dark:border-slate-800 shadow-lg shadow-slate-200/50 dark:shadow-none overflow-x-auto no-scrollbar">
+                            <div className="flex lg:flex-col gap-1 min-w-max lg:min-w-0">
                                 {menuItems.map((item) => {
                                     const Icon = item.icon;
                                     const isActive = activeTab === item.id;
@@ -334,16 +334,16 @@ export const Perfil = () => {
                                         <button
                                             key={item.id}
                                             onClick={() => setActiveTab(item.id as TabType)}
-                                            className={`w-full flex items-center justify-between p-4 rounded-2xl transition-all group ${isActive
+                                            className={`flex items-center justify-between p-3 md:p-4 rounded-2xl transition-all group shrink-0 lg:shrink ${isActive
                                                 ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/30'
                                                 : 'hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300'
                                                 }`}
                                         >
                                             <div className="flex items-center gap-3">
                                                 <Icon size={18} className={isActive ? 'text-white' : 'text-slate-400 group-hover:text-orange-500'} />
-                                                <span className="font-bold">{item.label}</span>
+                                                <span className="font-bold text-xs md:text-sm whitespace-nowrap">{item.label}</span>
                                             </div>
-                                            <ChevronRight size={18} className={isActive ? 'text-white/70' : 'text-slate-300 group-hover:text-orange-500 transition-colors'} />
+                                            <ChevronRight size={18} className={`hidden lg:block ${isActive ? 'text-white/70' : 'text-slate-300 group-hover:text-orange-500 transition-colors'}`} />
                                         </button>
                                     );
                                 })}

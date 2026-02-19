@@ -12,6 +12,7 @@ import { CrudPratos } from './components/biz/CrudPratos';
 import { useDeliveryStore } from './stores/deliveryStore';
 import { useMultiTabSync } from './hooks/useMultiTabSync';
 import { FloatingModeToggle } from './components/FloatingModeToggle';
+import { MobileNav } from './components/MobileNav';
 
 // Componente para gerenciar navegação automática baseada no modo
 const NavigationHandler = () => {
@@ -53,7 +54,7 @@ function App() {
       <NavigationHandler />
       <Toaster position="bottom-right" reverseOrder={false} />
       <FloatingModeToggle />
-      <div className="min-h-screen flex flex-col transition-colors duration-500 bg-slate-50 dark:bg-slate-950">
+      <div className="min-h-screen flex flex-col transition-colors duration-500 bg-slate-50 dark:bg-slate-950 pb-16 lg:pb-0">
         <Header />
         <main className="flex-1">
           <Routes>
@@ -66,6 +67,7 @@ function App() {
             <Route path="/admin/produtos" element={<CrudPratos />} />
           </Routes>
         </main>
+        <MobileNav />
 
         <footer className="py-8 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 mt-auto">
           <div className="container mx-auto px-4 text-center text-slate-400 text-sm">
